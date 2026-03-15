@@ -1,0 +1,145 @@
+<div class="stars-container">
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+</div>
+
+<div class="dashboard">
+  <div class="page-header">
+    <h1 class="page-title gradient-text">Cat Universe 🌌</h1>
+    <p class="page-subtitle">Your feline command center</p>
+  </div>
+
+  <!-- Stats Cards -->
+  @if (store.loading()) {
+    <div class="loading-state">
+      <div class="loading-cat">🐱</div>
+      <p>Fetching cats from the universe...</p>
+    </div>
+    <div class="stats-grid">
+      @for (i of [1, 2, 3, 4]; track i) {
+        <div class="stat-card glass">
+          <div class="skeleton" style="height: 20px; width: 40%; margin-bottom: 12px;"></div>
+          <div class="skeleton" style="height: 36px; width: 60%;"></div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="stats-grid">
+      <div class="stat-card glass">
+        <div class="stat-icon purple emoji-icon">
+          <span>🐱</span>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Total Cats</span>
+          <span class="stat-value">{{ store.totalCats() }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass">
+        <div class="stat-icon cyan emoji-icon">
+          <span>🎂</span>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Average Age</span>
+          <span class="stat-value">{{ store.avgAge() }} yrs</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass">
+        <div class="stat-icon green emoji-icon">
+          <span>🐣</span>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Youngest Cat</span>
+          @if (store.youngestCat(); as youngest) {
+            <span class="stat-value">{{ youngest.name }}</span>
+            <span class="stat-sub">{{ youngest.age }} yrs</span>
+          } @else {
+            <span class="stat-value">—</span>
+          }
+        </div>
+      </div>
+
+      <div class="stat-card glass">
+        <div class="stat-icon rose emoji-icon">
+          <span>🐈</span>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Oldest Cat</span>
+          @if (store.oldestCat(); as oldest) {
+            <span class="stat-value">{{ oldest.name }}</span>
+            <span class="stat-sub">{{ oldest.age }} yrs</span>
+          } @else {
+            <span class="stat-value">—</span>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Recent Cats -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Recent Cats</h2>
+      <div class="section-actions">
+        <button class="btn-outline" (click)="exportCsv()" [disabled]="!store.cats().length">
+          <span class="material-icons">download</span>
+          Export Galaxy 📊
+        </button>
+        <button class="btn-gradient" (click)="navigateToCats()">
+          <span class="material-icons">visibility</span>
+          View All Cats
+        </button>
+      </div>
+    </div>
+
+    @if (store.loading()) {
+      <div class="recent-list glass">
+        @for (i of [1, 2, 3]; track i) {
+          <div class="recent-item">
+            <div class="skeleton" style="height: 44px; width: 44px; border-radius: 14px;"></div>
+            <div style="flex: 1;">
+              <div class="skeleton" style="height: 14px; width: 50%; margin-bottom: 8px;"></div>
+              <div class="skeleton" style="height: 12px; width: 80%;"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else if (store.cats().length === 0) {
+      <div class="empty-state glass">
+        <div class="empty-cat">😿</div>
+        <h3>No cats found in the universe...</h3>
+        <p>Add your first cat to explore the feline galaxy</p>
+        <button class="btn-gradient" routerLink="/cats">Go to Cats</button>
+      </div>
+    } @else {
+      <div class="recent-list glass">
+        @for (cat of recentCats; track cat.id) {
+          <div class="recent-item">
+            <span class="paw-hover">🐾</span>
+            <div class="recent-avatar" [style.background]="getAvatarColor(cat.name)">
+              {{ getInitial(cat.name) }}
+            </div>
+            <div class="recent-info">
+              <span class="recent-name">{{ cat.name }}</span>
+              <span class="recent-desc">{{ cat.description }}</span>
+            </div>
+            <span class="age-badge">{{ cat.age }} yrs</span>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Fun Cat Fact -->
+  <div class="section fun-fact-section">
+    <div class="fun-fact-card glass">
+      <div class="fact-icon">🐱</div>
+      <div class="fact-content">
+        <h4>Did you know?</h4>
+        <p>{{ funFact() }}</p>
+      </div>
+    </div>
+  </div>
+</div>

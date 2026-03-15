@@ -1,0 +1,81 @@
+<div class="cats-page">
+  <div class="page-header">
+    <div class="title-row">
+      <h1 class="page-title gradient-text">All Cats 🐾</h1>
+      <span class="count-badge">{{ store.filteredCats().length }}</span>
+    </div>
+    <div class="search-bar glass">
+      <span class="material-icons search-icon">search</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search cats by name or description..."
+        [value]="store.searchQuery()"
+        (input)="onSearch($event)"
+      />
+      @if (store.searchQuery()) {
+        <button class="clear-btn" (click)="clearSearch()">
+          <span class="material-icons">close</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (store.loading()) {
+    <div class="loading-state">
+      <div class="loading-cat">🐱</div>
+      <p>Fetching cats from the universe...</p>
+    </div>
+    <div class="cats-grid">
+      @for (i of [1, 2, 3, 4, 5]; track i) {
+        <div class="skeleton-card glass">
+          <div class="skeleton-header">
+            <div class="skeleton" style="height: 48px; width: 48px; border-radius: 14px;"></div>
+            <div style="flex: 1;">
+              <div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 10px;"></div>
+              <div class="skeleton" style="height: 12px; width: 85%;"></div>
+            </div>
+            <div class="skeleton" style="height: 28px; width: 60px; border-radius: 20px;"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (store.error()) {
+    <div class="error-state glass">
+      <span class="material-icons error-icon">error_outline</span>
+      <h3>Something went wrong</h3>
+      <p>{{ store.error() }}</p>
+      <button class="btn-gradient" (click)="retry()">
+        <span class="material-icons">refresh</span>
+        Retry
+      </button>
+    </div>
+  } @else if (store.filteredCats().length === 0) {
+    <div class="empty-state glass">
+      @if (store.searchQuery()) {
+        <div class="empty-cat">😿</div>
+        <h3>No results found</h3>
+        <p>No cats match "{{ store.searchQuery() }}". Try a different search term.</p>
+        <button class="btn-outline" (click)="clearSearch()">Clear Search</button>
+      } @else {
+        <div class="empty-cat">😿</div>
+        <h3>No cats found in the universe...</h3>
+        <p>Add your first cat to explore the feline galaxy</p>
+        <button class="btn-gradient" (click)="openAddDialog()">
+          <span class="material-icons">add</span>
+          Add Your First Cat
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="cats-grid">
+      @for (cat of store.filteredCats(); track cat.id) {
+        <app-cat-card
+          [cat]="cat"
+          (edit)="onEditCat($event)"
+          (delete)="onDeleteCat($event)"
+        />
+      }
+    </div>
+  }
+</div>

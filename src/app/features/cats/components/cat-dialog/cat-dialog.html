@@ -1,0 +1,86 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="dialog-icon">
+      <span class="material-icons">pets</span>
+    </div>
+    <h2 class="dialog-title gradient-text">
+      @if (isEditMode()) {
+        Edit Cat
+      } @else {
+        Add New Cat
+      }
+    </h2>
+    <p class="dialog-subtitle">
+      @if (isEditMode()) {
+        Update your cat's information below
+      } @else {
+        Enter your cat's details to add them to the universe
+      }
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="dialog-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Cat Name</mat-label>
+      <input matInput formControlName="name" maxlength="25" placeholder="e.g. Whiskers, Luna, Shadow..." />
+      <mat-hint align="end">{{ nameLength }}/25</mat-hint>
+      @if (form.controls.name.hasError('required')) {
+        <mat-error>Name is required</mat-error>
+      }
+      @if (form.controls.name.hasError('minlength')) {
+        <mat-error>Minimum 2 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Age</mat-label>
+      <input matInput formControlName="age" placeholder="e.g. 3" />
+      @if (form.controls.age.hasError('required')) {
+        <mat-error>Age is required</mat-error>
+      }
+      @if (form.controls.age.hasError('pattern')) {
+        <mat-error>Numbers only</mat-error>
+      }
+      @if (form.controls.age.hasError('min')) {
+        <mat-error>Minimum age is 1</mat-error>
+      }
+      @if (form.controls.age.hasError('max')) {
+        <mat-error>Maximum age is 30</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="3"
+        placeholder="Tell us about this purrfect cat..."
+      ></textarea>
+      @if (form.controls.description.hasError('required')) {
+        <mat-error>Description is required</mat-error>
+      }
+      @if (form.controls.description.hasError('minlength')) {
+        <mat-error>Minimum 2 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-cancel" (click)="onCancel()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-submit"
+        [class.btn-disabled]="form.invalid"
+        [disabled]="form.invalid"
+      >
+        @if (isEditMode()) {
+          Update Cat
+        } @else {
+          Add to Universe
+        }
+      </button>
+    </div>
+  </form>
+</div>

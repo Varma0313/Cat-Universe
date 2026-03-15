@@ -1,0 +1,52 @@
+<div
+  class="cat-card glass"
+  [class.expanded]="isExpanded()"
+  (click)="toggleExpand()"
+  role="button"
+  tabindex="0"
+  (keydown.enter)="toggleExpand()"
+  (keydown.space)="toggleExpand()"
+>
+  <div class="card-header">
+    <div class="avatar" [style.background]="avatarColor()">
+      {{ initial() }}
+    </div>
+    <div class="cat-info">
+      <h3 class="cat-name">{{ cat().name }}</h3>
+      <p class="cat-desc">{{ cat().description }}</p>
+    </div>
+    <span class="age-badge">{{ cat().age }} yrs</span>
+  </div>
+
+  @if (isExpanded()) {
+    <div class="expanded-content">
+      @if (loadingDetail()) {
+        <div class="detail-loading">
+          <div class="skeleton" style="height: 12px; width: 60%; margin-bottom: 8px;"></div>
+          <div class="skeleton" style="height: 12px; width: 80%;"></div>
+        </div>
+      } @else {
+        <div class="detail-section">
+          <div class="detail-row">
+            <span class="detail-label">🐾 Full Description</span>
+            <p class="detail-value">{{ cat().description }}</p>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">🐾 Age</span>
+            <p class="detail-value">{{ cat().age }} years old</p>
+          </div>
+        </div>
+      }
+      <div class="card-actions">
+        <button class="btn btn-edit" (click)="onEdit($event)">
+          <span class="material-icons">edit</span>
+          Edit
+        </button>
+        <button class="btn btn-delete" (click)="onDelete($event)">
+          <span class="material-icons">delete</span>
+          Delete
+        </button>
+      </div>
+    </div>
+  }
+</div>

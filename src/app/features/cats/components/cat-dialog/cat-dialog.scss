@@ -1,0 +1,97 @@
+.dialog-container {
+  padding: 32px;
+  min-width: 420px;
+
+  @media (max-width: 480px) {
+    min-width: unset;
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+}
+
+.dialog-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.dialog-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+
+  .material-icons {
+    font-size: 28px;
+    color: #fff;
+  }
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.dialog-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text);
+  }
+}
+
+.btn-submit {
+  background: var(--gradient);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    box-shadow: var(--glow-purple);
+    transform: translateY(-1px);
+  }
+
+  &.btn-disabled,
+  &:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}

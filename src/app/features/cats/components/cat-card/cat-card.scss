@@ -1,0 +1,174 @@
+:host {
+  display: block;
+}
+
+.cat-card {
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "🐱";
+    position: absolute;
+    bottom: -15px;
+    right: -10px;
+    font-size: 80px;
+    opacity: 0.03;
+    z-index: 0;
+    pointer-events: none;
+    transform: rotate(15deg);
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    background: var(--bg-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--glow-purple);
+    
+    &::after {
+      opacity: 0.08;
+    }
+  }
+
+  &.expanded {
+    border-color: var(--purple);
+    box-shadow: var(--glow-purple);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.cat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cat-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+
+.cat-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.age-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--gradient);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.expanded-content {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+  animation: expand-row 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.detail-loading {
+  padding: 8px 0;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+
+  .material-icons {
+    font-size: 16px;
+  }
+}
+
+.btn-edit {
+  background: var(--purple-light);
+  color: var(--purple);
+
+  &:hover {
+    background: rgba(124, 58, 237, 0.35);
+    box-shadow: var(--glow-purple);
+  }
+}
+
+.btn-delete {
+  background: rgba(244, 63, 94, 0.15);
+  color: #F43F5E;
+
+  &:hover {
+    background: rgba(244, 63, 94, 0.3);
+    box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
+  }
+}
