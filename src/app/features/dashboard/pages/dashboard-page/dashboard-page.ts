@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CatsStore } from '../../../cats/store/cats.store';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -67,12 +68,7 @@ export class DashboardPage implements OnInit {
       .join('\n');
 
     const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'cat-universe-export.csv';
-    link.click();
-    URL.revokeObjectURL(url);
+    saveAs(blob, 'cat-universe-export.csv');
   }
 
   navigateToCats(): void {
